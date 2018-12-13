@@ -19,19 +19,17 @@ class ViewController: UIViewController {
     
     var timer: CADisplayLink!
     
-    var vertexBuffer: MTLBuffer!
+    var lastFrameTimeStamp: CFTimeInterval = 0.0
     
-    let vertexData: [Float] =
-    [
-        0.0,  1.0, 0.0,
-        -1.0, -1.0, 0.0,
-        1.0, -1.0, 0.0
-    ]
+    var projectionMatrix: Matrix4!
+    
+    var objectToDraw: Cube!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         device = MTLCreateSystemDefaultDevice()
+        commandQueue = device.makeCommandQueue()
         
         metalLayer = CAMetalLayer()
         metalLayer.device = device
@@ -40,18 +38,18 @@ class ViewController: UIViewController {
         metalLayer.frame = view.layer.frame
         
         view.layer.addSublayer(metalLayer)
-
-        loadData()
-        commandQueue = device.makeCommandQueue()
         
-        timer = CADisplayLink(target: self, selector: #selector(gameLoop))
+        projectionMatrix = Matrix4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
+
+        setupTrianglePSO()
+        
+        timer = CADisplayLink(target: self, selector: #selector(ViewController.newFrame(displayLink:)))
         timer.add(to: RunLoop.main, forMode: .default)
     }
     
-    func loadData()
+    func setupTrianglePSO()
     {
-        let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0])
-        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: [])
+        objectToDraw = Cube(device: self.device)
         
         let defaultLibrary = device.makeDefaultLibrary()!
         let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment_shader")
@@ -67,29 +65,27 @@ class ViewController: UIViewController {
     
     func render(){
         guard let drawable = metalLayer?.nextDrawable() else {return}
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
-            red: 0xcc/0xff,
-            green: 0.0,
-            blue: 0.0,
-            alpha: 1.0
-        )
-        let commandBuffer = commandQueue.makeCommandBuffer()!
         
-        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor)!
-        renderEncoder.setRenderPipelineState(pipelineState)
-        renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-        renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
-        
-        renderEncoder.endEncoding()
-        
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
+        let cameraMatrix = Matrix4()
+        cameraMatrix.translate(0.0, y: 0.0, z: -7.0)
+        cameraMatrix.rotateAroundX(Matrix4.degrees(toRad: 25.0), y: 0.0, z: 0.0)
+        objectToDraw.render(commandQueue: self.commandQueue, pipelineState: self.pipelineState, drawable: drawable, viewMatrix: cameraMatrix, projectionMatrix: self.projectionMatrix, clearColor: nil)
     }
     
-    @objc func gameLoop() {
+    @objc func newFrame(displayLink: CADisplayLink){
+        if lastFrameTimeStamp == 0.0{
+            lastFrameTimeStamp = displayLink.timestamp
+        }
+        
+        let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimeStamp
+        lastFrameTimeStamp = displayLink.timestamp
+        
+        gameloop(timeSinceLastUpdate: elapsed)
+    }
+    
+    func gameloop(timeSinceLastUpdate: CFTimeInterval){
+        objectToDraw.updateWithDelta(delta: timeSinceLastUpdate)
+        
         autoreleasepool{
             self.render()
         }

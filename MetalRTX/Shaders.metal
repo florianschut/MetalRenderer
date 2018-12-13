@@ -9,13 +9,36 @@
 #include <metal_stdlib>
 using namespace metal;
 
-vertex float4 basic_vertex_shader(const device packed_float3* vertex_array [[buffer(0)]],
+struct VertexIn{
+    packed_float3 position;
+    packed_float4 color;
+};
+
+struct VertexOut{
+    float4 position [[position]];
+    float4 color;
+};
+
+struct Uniforms{
+    float4x4 modelMatrix;
+    float4x4 projectionMatrix;
+};
+
+vertex VertexOut basic_vertex_shader(const device VertexIn* vertex_array [[buffer(0)]],
+                                     const device Uniforms& Uniforms [[buffer(1)]],
                                   unsigned int vid [[ vertex_id ]])
 {
-    return float4(vertex_array[vid], 1.0f);
+    VertexIn in = vertex_array[vid];
+    
+    VertexOut out;
+    out.position = Uniforms.projectionMatrix * Uniforms.modelMatrix * float4(in.position, 1.0f);
+    out.color = in.color;
+    
+    return out;
 }
 
-fragment half4 basic_fragment_shader()
+fragment half4 basic_fragment_shader(VertexOut vertexOutput [[stage_in]])
 {
-    return half4(1.0);
+    return half4(vertexOutput.color);
+    
 }
