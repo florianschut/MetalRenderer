@@ -13,6 +13,7 @@
 		1799936121B7002D00E94082 /* MetalRTX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1799935F21B7002D00E94082 /* MetalRTX.xcdatamodeld */; };
 		1799936321B7002F00E94082 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1799936221B7002F00E94082 /* Assets.xcassets */; };
 		1799936621B7002F00E94082 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1799936421B7002F00E94082 /* LaunchScreen.storyboard */; };
+		1799936E21C2A22D00E94082 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1799936D21C2A22D00E94082 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1799936221B7002F00E94082 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1799936521B7002F00E94082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1799936721B7002F00E94082 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1799936D21C2A22D00E94082 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				1799935821B7002D00E94082 /* AppDelegate.swift */,
 				1799935A21B7002D00E94082 /* ViewController.swift */,
+				1799936D21C2A22D00E94082 /* Shaders.metal */,
 				1799935C21B7002D00E94082 /* Main.storyboard */,
 				1799936221B7002F00E94082 /* Assets.xcassets */,
 				1799936421B7002F00E94082 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1799936E21C2A22D00E94082 /* Shaders.metal in Sources */,
 				1799936121B7002D00E94082 /* MetalRTX.xcdatamodeld in Sources */,
 				1799935B21B7002D00E94082 /* ViewController.swift in Sources */,
 				1799935921B7002D00E94082 /* AppDelegate.swift in Sources */,
