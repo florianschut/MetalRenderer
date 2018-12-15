@@ -12,11 +12,13 @@ using namespace metal;
 struct VertexIn{
     packed_float3 position;
     packed_float4 color;
+	packed_float2 uv;
 };
 
 struct VertexOut{
     float4 position [[position]];
     float4 color;
+	float2 uv;
 };
 
 struct Uniforms{
@@ -33,12 +35,15 @@ vertex VertexOut basic_vertex_shader(const device VertexIn* vertex_array [[buffe
     VertexOut out;
     out.position = Uniforms.projectionMatrix * Uniforms.modelMatrix * float4(in.position, 1.0f);
     out.color = in.color;
-    
+    out.uv = in.uv;
+	
     return out;
 }
 
-fragment half4 basic_fragment_shader(VertexOut vertexOutput [[stage_in]])
+fragment float4 basic_fragment_shader(VertexOut vertexOutput [[stage_in]],
+									 texture2d<float> tex2D [[texture(0)]],
+									 sampler sampler2D [[sampler(0)]])
 {
-    return half4(vertexOutput.color);
+    return tex2D.sample(sampler2D, vertexOutput.uv);
     
 }

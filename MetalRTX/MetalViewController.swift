@@ -9,8 +9,15 @@
 import UIKit
 import Metal
 import MetalKit
+import simd
 
-class ViewController: UIViewController {
+
+protocol MetalViewControllerDelegate : class{
+    func updateLogic(timeSinceLastUpdate: CFTimeInterval)
+    func renderObjects(drawable: CAMetalDrawable)
+}
+
+class MetalViewController: UIViewController {
 
     var device: MTLDevice!
     var metalLayer: CAMetalLayer!
@@ -23,7 +30,7 @@ class ViewController: UIViewController {
     
     var projectionMatrix: Matrix4!
     
-    var objectToDraw: Cube!
+    weak var metalViewControllerDelegate: MetalViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,22 +42,34 @@ class ViewController: UIViewController {
         metalLayer.device = device
         metalLayer.pixelFormat = .bgra8Unorm
         metalLayer.framebufferOnly = true
-        metalLayer.frame = view.layer.frame
+
         
         view.layer.addSublayer(metalLayer)
-        
-        projectionMatrix = Matrix4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
 
         setupTrianglePSO()
         
-        timer = CADisplayLink(target: self, selector: #selector(ViewController.newFrame(displayLink:)))
+        timer = CADisplayLink(target: self, selector: #selector(MetalViewController.newFrame(displayLink:)))
         timer.add(to: RunLoop.main, forMode: .default)
     }
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		
+		if let window = view.window{
+			let scale = window.screen.nativeScale
+			let layerSize = view.bounds.size
+			
+			view.contentScaleFactor = scale
+			
+			metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
+			metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
+			
+			projectionMatrix = Matrix4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
+		}
+	}
     
     func setupTrianglePSO()
-    {
-        objectToDraw = Cube(device: self.device)
-        
+    {        
         let defaultLibrary = device.makeDefaultLibrary()!
         let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment_shader")
         let vertexProgram = defaultLibrary.makeFunction(name: "basic_vertex_shader")
@@ -65,11 +84,7 @@ class ViewController: UIViewController {
     
     func render(){
         guard let drawable = metalLayer?.nextDrawable() else {return}
-        
-        let cameraMatrix = Matrix4()
-        cameraMatrix.translate(0.0, y: 0.0, z: -7.0)
-        cameraMatrix.rotateAroundX(Matrix4.degrees(toRad: 25.0), y: 0.0, z: 0.0)
-        objectToDraw.render(commandQueue: self.commandQueue, pipelineState: self.pipelineState, drawable: drawable, viewMatrix: cameraMatrix, projectionMatrix: self.projectionMatrix, clearColor: nil)
+        self.metalViewControllerDelegate?.renderObjects(drawable: drawable)
     }
     
     @objc func newFrame(displayLink: CADisplayLink){
@@ -84,7 +99,7 @@ class ViewController: UIViewController {
     }
     
     func gameloop(timeSinceLastUpdate: CFTimeInterval){
-        objectToDraw.updateWithDelta(delta: timeSinceLastUpdate)
+        self.metalViewControllerDelegate?.updateLogic(timeSinceLastUpdate: timeSinceLastUpdate)
         
         autoreleasepool{
             self.render()
