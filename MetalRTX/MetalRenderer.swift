@@ -16,54 +16,33 @@ protocol MetalViewControllerDelegate : class{
     func renderObjects(drawable: CAMetalDrawable)
 }
 
-class MetalRenderer {
+class MetalRenderer: NSObject, MTKViewDelegate {
 
-    var device: MTLDevice!
-    var metalLayer: CAMetalLayer!
+    public let device: MTLDevice
     var pipelineState: MTLRenderPipelineState!
     var commandQueue: MTLCommandQueue!
-    
-    var timer: CADisplayLink!
-    
-    var lastFrameTimeStamp: CFTimeInterval = 0.0
-    
+
     var projectionMatrix: float4x4!
     
     weak var metalViewControllerDelegate: MetalViewControllerDelegate?
     
-    init (metalKitView: MTKView) {
+    init? (metalKitView: MTKView) {
         // Do any additional setup after loading the view, typically from a nib.
-        device = MTLCreateSystemDefaultDevice()
-        commandQueue = device.makeCommandQueue()
-        
-        metalLayer = CAMetalLayer()
-        metalLayer.device = device
-        metalLayer.pixelFormat = .bgra8Unorm
-        metalLayer.framebufferOnly = true
-
-        
-        metalKitView.layer!.addSublayer(metalLayer)
-
-        setupTrianglePSO()
-        
-        timer = CADisplayLink(target: self, selector: #selector(MetalViewController.newFrame(displayLink:)))
-        timer.add(to: RunLoop.main, forMode: .default)
-    }
-	
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
+		self.device = metalKitView.device!
+		self.commandQueue = device.makeCommandQueue()
 		
-		if let window = view.window{
-			let scale = window.screen.nativeScale
-			let layerSize = view.bounds.size
-			
-			view.contentScaleFactor = scale
-			
-			metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
-			metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
-			
-			projectionMatrix = float4x4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
-		}
+		let defaultLibrary = device.makeDefaultLibrary()!
+		let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment_shader")
+		let vertexProgram = defaultLibrary.makeFunction(name: "basic_vertex_shader")
+		
+		let pipelineStateDesc = MTLRenderPipelineDescriptor()
+		pipelineStateDesc.vertexFunction = vertexProgram
+		pipelineStateDesc.fragmentFunction = fragmentProgram
+		pipelineStateDesc.colorAttachments[0].pixelFormat = .bgra8Unorm
+		
+		pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDesc)
+		
+        super.init()
 	}
     
     func setupTrianglePSO()
@@ -79,28 +58,31 @@ class MetalRenderer {
         
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDesc)
     }
-    
-    func render(){
-        guard let drawable = metalLayer?.nextDrawable() else {return}
-        self.metalViewControllerDelegate?.renderObjects(drawable: drawable)
-    }
-    
-    @objc func newFrame(displayLink: CADisplayLink){
-        if lastFrameTimeStamp == 0.0{
-            lastFrameTimeStamp = displayLink.timestamp
-        }
-        
-        let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimeStamp
-        lastFrameTimeStamp = displayLink.timestamp
-        
-        gameloop(timeSinceLastUpdate: elapsed)
-    }
-    
-    func gameloop(timeSinceLastUpdate: CFTimeInterval){
-        self.metalViewControllerDelegate?.updateLogic(timeSinceLastUpdate: timeSinceLastUpdate)
-        
-        autoreleasepool{
-            self.render()
-        }
-    }
+	
+	func draw(in view: MTKView) {
+		render(view.currentDrawable)
+	}
+	
+	func render(_ drawable: CAMetalDrawable?) {
+		guard let drawable = drawable else { return }
+		self.metalViewControllerDelegate?.renderObjects(drawable: drawable)
+	}
+	
+	func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+		projectionMatrix = float4x4.makePerspectiveViewAngle(float4x4.degrees(toRad: 85.0),
+															 aspectRatio: Float(size.width / size.height),
+															 nearZ: 0.01, farZ: 100.0)
+	}
+	
+	class func loadTexture(device: MTLDevice, textureName: String) throws ->MTLTexture{
+		let textureLoader = MTKTextureLoader(device: device)
+		
+		let textureLoaderOptions = [
+			MTKTextureLoader.Option.textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
+			MTKTextureLoader.Option.textureStorageMode: NSNumber(value: MTLStorageMode.`private`.rawValue)
+		]
+		
+		return try textureLoader.newTexture(name: textureName, scaleFactor: 1.0,
+											bundle: nil, options: textureLoaderOptions)
+	}
 }
