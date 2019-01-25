@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import Metal
+import MetalKit
 
 class Cube: Node{
-	init (device: MTLDevice, commandQueue: MTLCommandQueue){
+	init (device: MTLDevice, commandQueue: MTLCommandQueue, textureLoader: MTKTextureLoader){
 		//Front
 		let A = Vertex(x: -1.0, y:   1.0, z:   1.0, r:  1.0, g:  0.0, b:  0.0, a:  1.0, s: 0.0, t: 0.0)
 		let B = Vertex(x: -1.0, y:  -1.0, z:   1.0, r:  0.0, g:  1.0, b:  0.0, a:  1.0, s: 0.0, t: 1.0)
@@ -58,18 +58,13 @@ class Cube: Node{
 			U,V,W ,U,W,X    //Back
 		]
 		
-		let texture = MetalTexture(resourceName: "elon", ext: "jpg", mipmaped: true)
-		texture.loadTexture(device: device, commandQ: commandQueue, flip: true)
-		
-		super.init(name: "Cube", vertices: vertexArray, device: device, texture: texture.texture)
+		let texture = try! MetalRenderer.loadTexture(device: device, textureName: "elon.png")
+
+		super.init(name: "Cube", vertices: vertexArray, device: device, texture: texture)
     }
     
     override func updateWithDelta(delta: CFTimeInterval) {
         super.updateWithDelta(delta: delta)
         
-//        let secsPerMove: Float = 6.0
-//        
-//        rotationY = sinf(Float(time) * 2.0 * .pi / secsPerMove)
-//        rotationX = sinf(Float(time) * 2.0 * .pi / secsPerMove)
     }
 }

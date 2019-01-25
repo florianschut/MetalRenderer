@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import simd
 
 class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
     
-    var cameraMatrix = Matrix4()
+    var cameraMatrix = float4x4()
     var objectToDraw: Cube!
 	let panSensivity: Float = 5.0
 	var lastPanLocation: CGPoint!
@@ -18,7 +19,7 @@ class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.cameraMatrix.translate(0.0, y: 0.0, z: -3.0)
-        self.cameraMatrix.rotateAroundX(Matrix4.degrees(toRad: 25.0), y: 0.0, z: 0.0)
+        self.cameraMatrix.rotateAroundX(float4x4.degrees(toRad: 25.0), y: 0.0, z: 0.0)
 		objectToDraw = Cube(device: device, commandQueue: self.commandQueue)
         self.metalViewControllerDelegate = self;
 		
@@ -44,10 +45,8 @@ class MySceneViewController: MetalViewController, MetalViewControllerDelegate {
 			let xDelta = Float(lastPanLocation.x - pointInView.x) / Float(self.view.bounds.width) * panSensivity
 			let yDelta = Float(lastPanLocation.y - pointInView.y) / Float(self.view.bounds.height) * panSensivity
 			
-			var rotation = objectToDraw.rotationX
-			
-			objectToDraw.rotationX -= xDelta
-			objectToDraw.rotationY -= yDelta
+			objectToDraw.rotationX -= yDelta
+			objectToDraw.rotationY -= xDelta
 			lastPanLocation = pointInView
 		}else if panGesture.state == UIGestureRecognizer.State.began {
 			lastPanLocation = panGesture.location(in: self.view)

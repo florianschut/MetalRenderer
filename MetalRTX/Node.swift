@@ -10,6 +10,7 @@ import Foundation
 import Metal
 import QuartzCore
 import GLKit
+import simd
 
 class Node{
     let device: MTLDevice
@@ -45,12 +46,12 @@ class Node{
         self.name = name
         self.device = device
         vertexCount = vertices.count
-		self.bufferProvider = BufferProvider(device: device, inflightBufferCount: 3, sizeOfUniformBuffer: MemoryLayout<Float>.size * Matrix4.numberOfElements() * 2)
+		self.bufferProvider = BufferProvider(device: device, inflightBufferCount: 3, sizeOfUniformBuffer: MemoryLayout<Float>.size * float4x4.numberOfElements() * 2)
 		self.texture = texture
     }
     
     func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable,
-                viewMatrix: Matrix4, projectionMatrix: Matrix4, clearColor: MTLClearColor?){
+                viewMatrix: float4x4, projectionMatrix: float4x4, clearColor: MTLClearColor?){
 		_ = bufferProvider.availableResourceSemaphore.wait(timeout: DispatchTime.distantFuture)
 		
         let renderPassDescriptor = MTLRenderPassDescriptor()
@@ -76,7 +77,7 @@ class Node{
 		}
 		
         //ModelMatrix Uniform Buffer
-        let modelViewMatrix = self.getModelMatrix()
+        var modelViewMatrix = self.getModelMatrix()
         modelViewMatrix.multiplyLeft(viewMatrix)
         
         let uniformBuffer = bufferProvider.nextUniformBuffer(projectionMatrix: projectionMatrix, modelViewMatrix: modelViewMatrix)
@@ -89,8 +90,8 @@ class Node{
         commandBuffer.commit()
     }
     
-    func getModelMatrix()->Matrix4{
-        let matrix = Matrix4()
+    func getModelMatrix()->float4x4{
+        var matrix = float4x4()
         matrix.translate(positionX, y: positionY, z: positionZ)
         matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
         matrix.scale(scale, y: scale, z: scale)

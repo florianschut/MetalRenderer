@@ -9,11 +9,10 @@
 /* Begin PBXBuildFile section */
 		172D4E8F21C4261C00F85D16 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172D4E8E21C4261C00F85D16 /* SceneViewController.swift */; };
 		172E7BF921C4699D00C6DE8D /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E7BF821C4699D00C6DE8D /* BufferProvider.swift */; };
-		172E7BFB21C473FB00C6DE8D /* MetalTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E7BFA21C473FB00C6DE8D /* MetalTexture.swift */; };
 		172E7BFD21C47C7600C6DE8D /* elon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 172E7BFC21C47C7600C6DE8D /* elon.jpg */; };
 		172E7BFF21C47D5500C6DE8D /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = 172E7BFE21C47D5500C6DE8D /* cube.png */; };
 		1799935921B7002D00E94082 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799935821B7002D00E94082 /* AppDelegate.swift */; };
-		1799935B21B7002D00E94082 /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799935A21B7002D00E94082 /* MetalViewController.swift */; };
+		1799935B21B7002D00E94082 /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799935A21B7002D00E94082 /* MetalRenderer.swift */; };
 		1799935E21B7002D00E94082 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1799935C21B7002D00E94082 /* Main.storyboard */; };
 		1799936121B7002D00E94082 /* MetalRTX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1799935F21B7002D00E94082 /* MetalRTX.xcdatamodeld */; };
 		1799936621B7002F00E94082 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1799936421B7002F00E94082 /* LaunchScreen.storyboard */; };
@@ -21,18 +20,30 @@
 		1799937021C2B4C000E94082 /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799936F21C2B4C000E94082 /* Vertex.swift */; };
 		1799937221C2B52A00E94082 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799937121C2B52A00E94082 /* Node.swift */; };
 		1799937621C2C1F800E94082 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799937521C2C1F800E94082 /* Cube.swift */; };
-		1799937A21C2C40300E94082 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = 1799937821C2C40200E94082 /* Matrix4.m */; };
+		17B66F4C21C53D90004721BD /* float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B66F4B21C53D90004721BD /* float4x4+Extensions.swift */; };
+		17DF3A1321CC1F9900D3045A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DF3A1221CC1F9900D3045A /* AppDelegate.swift */; };
+		17DF3A1521CC1F9900D3045A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17DF3A1421CC1F9900D3045A /* ViewController.swift */; };
+		17DF3A1721CC1F9A00D3045A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17DF3A1621CC1F9A00D3045A /* Assets.xcassets */; };
+		17DF3A1A21CC1F9A00D3045A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17DF3A1821CC1F9A00D3045A /* Main.storyboard */; };
+		17DF3A2121CC22E000D3045A /* float4x4+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B66F4B21C53D90004721BD /* float4x4+Extensions.swift */; };
+		17DF3A2221CC22E000D3045A /* cube.png in Resources */ = {isa = PBXBuildFile; fileRef = 172E7BFE21C47D5500C6DE8D /* cube.png */; };
+		17DF3A2321CC22E000D3045A /* elon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 172E7BFC21C47C7600C6DE8D /* elon.jpg */; };
+		17DF3A2521CC22E000D3045A /* BufferProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 172E7BF821C4699D00C6DE8D /* BufferProvider.swift */; };
+		17DF3A2621CC22E000D3045A /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799936F21C2B4C000E94082 /* Vertex.swift */; };
+		17DF3A2721CC22E000D3045A /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799937121C2B52A00E94082 /* Node.swift */; };
+		17DF3A2821CC22E000D3045A /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1799936D21C2A22D00E94082 /* Shaders.metal */; };
+		17DF3A2921CC22E000D3045A /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799937521C2C1F800E94082 /* Cube.swift */; };
+		17DF3A2A21CC22EC00D3045A /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1799935A21B7002D00E94082 /* MetalRenderer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		172D4E8E21C4261C00F85D16 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		172E7BF821C4699D00C6DE8D /* BufferProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferProvider.swift; sourceTree = "<group>"; };
-		172E7BFA21C473FB00C6DE8D /* MetalTexture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalTexture.swift; sourceTree = "<group>"; };
 		172E7BFC21C47C7600C6DE8D /* elon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = elon.jpg; sourceTree = "<group>"; };
 		172E7BFE21C47D5500C6DE8D /* cube.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cube.png; sourceTree = "<group>"; };
 		1799935521B7002D00E94082 /* MetalRTX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalRTX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1799935821B7002D00E94082 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1799935A21B7002D00E94082 /* MetalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
+		1799935A21B7002D00E94082 /* MetalRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
 		1799935D21B7002D00E94082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1799936021B7002D00E94082 /* MetalRTX.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MetalRTX.xcdatamodel; sourceTree = "<group>"; };
 		1799936521B7002F00E94082 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -41,13 +52,25 @@
 		1799936F21C2B4C000E94082 /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		1799937121C2B52A00E94082 /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		1799937521C2C1F800E94082 /* Cube.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
-		1799937721C2C40200E94082 /* MetalRTX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MetalRTX-Bridging-Header.h"; sourceTree = "<group>"; };
-		1799937821C2C40200E94082 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
-		1799937921C2C40300E94082 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
+		17B66F4B21C53D90004721BD /* float4x4+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "float4x4+Extensions.swift"; sourceTree = "<group>"; };
+		17DF3A1021CC1F9900D3045A /* MacMetalRTX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacMetalRTX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17DF3A1221CC1F9900D3045A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		17DF3A1421CC1F9900D3045A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		17DF3A1621CC1F9A00D3045A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17DF3A1921CC1F9A00D3045A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17DF3A1B21CC1F9A00D3045A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17DF3A1C21CC1F9A00D3045A /* MacMetalRTX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacMetalRTX.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		1799935221B7002D00E94082 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17DF3A0D21CC1F9900D3045A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -60,7 +83,9 @@
 		1799934C21B7002D00E94082 = {
 			isa = PBXGroup;
 			children = (
-				1799935721B7002D00E94082 /* MetalRTX */,
+				17DF3A2021CC203700D3045A /* MetalRTX */,
+				1799935721B7002D00E94082 /* iOSMetalRTX */,
+				17DF3A1121CC1F9900D3045A /* MacMetalRTX */,
 				1799935621B7002D00E94082 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,31 +95,49 @@
 			isa = PBXGroup;
 			children = (
 				1799935521B7002D00E94082 /* MetalRTX.app */,
+				17DF3A1021CC1F9900D3045A /* MacMetalRTX.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1799935721B7002D00E94082 /* MetalRTX */ = {
+		1799935721B7002D00E94082 /* iOSMetalRTX */ = {
 			isa = PBXGroup;
 			children = (
-				172E7BFE21C47D5500C6DE8D /* cube.png */,
-				172E7BFC21C47C7600C6DE8D /* elon.jpg */,
-				172E7BFA21C473FB00C6DE8D /* MetalTexture.swift */,
-				1799937921C2C40300E94082 /* Matrix4.h */,
-				1799937821C2C40200E94082 /* Matrix4.m */,
 				1799935821B7002D00E94082 /* AppDelegate.swift */,
-				1799935A21B7002D00E94082 /* MetalViewController.swift */,
-				172E7BF821C4699D00C6DE8D /* BufferProvider.swift */,
 				172D4E8E21C4261C00F85D16 /* SceneViewController.swift */,
-				1799936F21C2B4C000E94082 /* Vertex.swift */,
-				1799937121C2B52A00E94082 /* Node.swift */,
-				1799936D21C2A22D00E94082 /* Shaders.metal */,
-				1799937521C2C1F800E94082 /* Cube.swift */,
 				1799935C21B7002D00E94082 /* Main.storyboard */,
 				1799936421B7002F00E94082 /* LaunchScreen.storyboard */,
 				1799936721B7002F00E94082 /* Info.plist */,
 				1799935F21B7002D00E94082 /* MetalRTX.xcdatamodeld */,
-				1799937721C2C40200E94082 /* MetalRTX-Bridging-Header.h */,
+			);
+			path = iOSMetalRTX;
+			sourceTree = "<group>";
+		};
+		17DF3A1121CC1F9900D3045A /* MacMetalRTX */ = {
+			isa = PBXGroup;
+			children = (
+				17DF3A1221CC1F9900D3045A /* AppDelegate.swift */,
+				17DF3A1421CC1F9900D3045A /* ViewController.swift */,
+				17DF3A1621CC1F9A00D3045A /* Assets.xcassets */,
+				17DF3A1821CC1F9A00D3045A /* Main.storyboard */,
+				17DF3A1B21CC1F9A00D3045A /* Info.plist */,
+				17DF3A1C21CC1F9A00D3045A /* MacMetalRTX.entitlements */,
+			);
+			path = MacMetalRTX;
+			sourceTree = "<group>";
+		};
+		17DF3A2021CC203700D3045A /* MetalRTX */ = {
+			isa = PBXGroup;
+			children = (
+				17B66F4B21C53D90004721BD /* float4x4+Extensions.swift */,
+				1799935A21B7002D00E94082 /* MetalRenderer.swift */,
+				172E7BFE21C47D5500C6DE8D /* cube.png */,
+				172E7BFC21C47C7600C6DE8D /* elon.jpg */,
+				172E7BF821C4699D00C6DE8D /* BufferProvider.swift */,
+				1799936F21C2B4C000E94082 /* Vertex.swift */,
+				1799937121C2B52A00E94082 /* Node.swift */,
+				1799936D21C2A22D00E94082 /* Shaders.metal */,
+				1799937521C2C1F800E94082 /* Cube.swift */,
 			);
 			path = MetalRTX;
 			sourceTree = "<group>";
@@ -119,6 +162,23 @@
 			productReference = 1799935521B7002D00E94082 /* MetalRTX.app */;
 			productType = "com.apple.product-type.application";
 		};
+		17DF3A0F21CC1F9900D3045A /* MacMetalRTX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17DF3A1F21CC1F9A00D3045A /* Build configuration list for PBXNativeTarget "MacMetalRTX" */;
+			buildPhases = (
+				17DF3A0C21CC1F9900D3045A /* Sources */,
+				17DF3A0D21CC1F9900D3045A /* Frameworks */,
+				17DF3A0E21CC1F9900D3045A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacMetalRTX;
+			productName = MacMetalRTX;
+			productReference = 17DF3A1021CC1F9900D3045A /* MacMetalRTX.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -132,6 +192,9 @@
 					1799935421B7002D00E94082 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1010;
+					};
+					17DF3A0F21CC1F9900D3045A = {
+						CreatedOnToolsVersion = 10.1;
 					};
 				};
 			};
@@ -149,6 +212,7 @@
 			projectRoot = "";
 			targets = (
 				1799935421B7002D00E94082 /* MetalRTX */,
+				17DF3A0F21CC1F9900D3045A /* MacMetalRTX */,
 			);
 		};
 /* End PBXProject section */
@@ -165,6 +229,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17DF3A0E21CC1F9900D3045A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17DF3A1721CC1F9A00D3045A /* Assets.xcassets in Resources */,
+				17DF3A2321CC22E000D3045A /* elon.jpg in Resources */,
+				17DF3A1A21CC1F9A00D3045A /* Main.storyboard in Resources */,
+				17DF3A2221CC22E000D3045A /* cube.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -173,16 +248,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				1799936E21C2A22D00E94082 /* Shaders.metal in Sources */,
-				172E7BFB21C473FB00C6DE8D /* MetalTexture.swift in Sources */,
 				172E7BF921C4699D00C6DE8D /* BufferProvider.swift in Sources */,
+				17B66F4C21C53D90004721BD /* float4x4+Extensions.swift in Sources */,
 				1799936121B7002D00E94082 /* MetalRTX.xcdatamodeld in Sources */,
-				1799935B21B7002D00E94082 /* MetalViewController.swift in Sources */,
+				1799935B21B7002D00E94082 /* MetalRenderer.swift in Sources */,
 				1799937221C2B52A00E94082 /* Node.swift in Sources */,
 				1799937621C2C1F800E94082 /* Cube.swift in Sources */,
 				172D4E8F21C4261C00F85D16 /* SceneViewController.swift in Sources */,
 				1799937021C2B4C000E94082 /* Vertex.swift in Sources */,
-				1799937A21C2C40300E94082 /* Matrix4.m in Sources */,
 				1799935921B7002D00E94082 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17DF3A0C21CC1F9900D3045A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17DF3A2821CC22E000D3045A /* Shaders.metal in Sources */,
+				17DF3A2521CC22E000D3045A /* BufferProvider.swift in Sources */,
+				17DF3A2A21CC22EC00D3045A /* MetalRenderer.swift in Sources */,
+				17DF3A1521CC1F9900D3045A /* ViewController.swift in Sources */,
+				17DF3A2121CC22E000D3045A /* float4x4+Extensions.swift in Sources */,
+				17DF3A2921CC22E000D3045A /* Cube.swift in Sources */,
+				17DF3A1321CC1F9900D3045A /* AppDelegate.swift in Sources */,
+				17DF3A2621CC22E000D3045A /* Vertex.swift in Sources */,
+				17DF3A2721CC22E000D3045A /* Node.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +293,14 @@
 				1799936521B7002F00E94082 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		17DF3A1821CC1F9A00D3045A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17DF3A1921CC1F9A00D3045A /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -240,7 +338,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: florianschut@mac.com (3M7GYJQDHG)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -263,8 +361,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -301,7 +400,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: florianschut@mac.com (3M7GYJQDHG)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -317,8 +416,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -339,7 +439,6 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = nl.florianschut.MetalRTX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MetalRTX/MetalRTX-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -360,9 +459,50 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nl.florianschut.MetalRTX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "MetalRTX/MetalRTX-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		17DF3A1D21CC1F9A00D3045A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MacMetalRTX/MacMetalRTX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J4R8U9D5W2;
+				INFOPLIST_FILE = MacMetalRTX/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.florianschut.MacMetalRTX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		17DF3A1E21CC1F9A00D3045A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MacMetalRTX/MacMetalRTX.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = J4R8U9D5W2;
+				INFOPLIST_FILE = MacMetalRTX/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.florianschut.MacMetalRTX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -383,6 +523,15 @@
 			buildConfigurations = (
 				1799936B21B7002F00E94082 /* Debug */,
 				1799936C21B7002F00E94082 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17DF3A1F21CC1F9A00D3045A /* Build configuration list for PBXNativeTarget "MacMetalRTX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17DF3A1D21CC1F9A00D3045A /* Debug */,
+				17DF3A1E21CC1F9A00D3045A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

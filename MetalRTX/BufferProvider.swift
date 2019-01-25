@@ -8,6 +8,7 @@
 
 import Metal
 import Foundation
+import simd
 
 class BufferProvider: NSObject {
 	let inflightBufferCount: Int
@@ -33,13 +34,16 @@ class BufferProvider: NSObject {
 		}
 	}
 	
-	func nextUniformBuffer(projectionMatrix: Matrix4, modelViewMatrix: Matrix4) -> MTLBuffer{
+	func nextUniformBuffer(projectionMatrix: float4x4, modelViewMatrix: float4x4) -> MTLBuffer{
 		let buffer = uniformBuffers[availableBufferIndex]
 		
 		let bufferPointer = buffer.contents()
 		
-		memcpy(bufferPointer, modelViewMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
-		memcpy(bufferPointer + MemoryLayout<Float>.size * Matrix4.numberOfElements(), projectionMatrix.raw(), MemoryLayout<Float>.size * Matrix4.numberOfElements())
+		var projectionMatrix = projectionMatrix
+		var modelViewMatrix = modelViewMatrix
+		
+		memcpy(bufferPointer, &modelViewMatrix, MemoryLayout<Float>.size * 16)
+		memcpy(bufferPointer + MemoryLayout<Float>.size * 16, &projectionMatrix, MemoryLayout<Float>.size * float4x4.numberOfElements())
 		
 		availableBufferIndex += 1
 		if availableBufferIndex == inflightBufferCount{

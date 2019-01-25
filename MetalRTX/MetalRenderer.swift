@@ -1,12 +1,11 @@
 //
-//  ViewController.swift
+//  MetalRenderer.swift
 //  MetalRTX
 //
 //  Created by Florian Schut on 04/12/2018.
 //  Copyright © 2018 Florian Schut. All rights reserved.
 //
 
-import UIKit
 import Metal
 import MetalKit
 import simd
@@ -17,7 +16,7 @@ protocol MetalViewControllerDelegate : class{
     func renderObjects(drawable: CAMetalDrawable)
 }
 
-class MetalViewController: UIViewController {
+class MetalRenderer {
 
     var device: MTLDevice!
     var metalLayer: CAMetalLayer!
@@ -28,12 +27,11 @@ class MetalViewController: UIViewController {
     
     var lastFrameTimeStamp: CFTimeInterval = 0.0
     
-    var projectionMatrix: Matrix4!
+    var projectionMatrix: float4x4!
     
     weak var metalViewControllerDelegate: MetalViewControllerDelegate?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init (metalKitView: MTKView) {
         // Do any additional setup after loading the view, typically from a nib.
         device = MTLCreateSystemDefaultDevice()
         commandQueue = device.makeCommandQueue()
@@ -44,7 +42,7 @@ class MetalViewController: UIViewController {
         metalLayer.framebufferOnly = true
 
         
-        view.layer.addSublayer(metalLayer)
+        metalKitView.layer!.addSublayer(metalLayer)
 
         setupTrianglePSO()
         
@@ -64,7 +62,7 @@ class MetalViewController: UIViewController {
 			metalLayer.frame = CGRect(x: 0, y: 0, width: layerSize.width, height: layerSize.height)
 			metalLayer.drawableSize = CGSize(width: layerSize.width * scale, height: layerSize.height * scale)
 			
-			projectionMatrix = Matrix4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
+			projectionMatrix = float4x4.makePerspectiveViewAngle(90.0, aspectRatio: Float(self.view.bounds.size.width / self.view.bounds.size.height), nearZ: 0.01, farZ: 100.0)
 		}
 	}
     
